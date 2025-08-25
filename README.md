@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **App Name**: ZapGo Admin
 
-## Getting Started
+## Core Features:
 
-First, run the development server:
+- Dashboard Overview: Admin dashboard with key performance indicators (KPIs) like today's earnings, vehicle availability, ongoing and overdue rentals, charts, and recent payments.
+- Rider Management: Manage rider profiles, including adding new riders, editing existing ones, uploading KYC documents, and viewing rental and payment history.
+- Vehicle Management: Manage vehicles, including adding new vehicles, editing vehicle details, and tracking availability and service history.
+- Rental Management: Manage rental agreements, including creating new rentals through a multi-step wizard, tracking rental status, processing payments, and handling vehicle returns.
+- Payment Tracking & Reporting: Record payments, generate reports, and manage overdue notices.
+- Alerting System: Administer alerts for payment due, overdue rentals, and document expiry to help organize.
+- Staff Management (Admin Only): Manage staff accounts and permissions, including creating new staff members, assigning roles (Admin/Staff), and enabling/disabling accounts.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Style Guidelines:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Primary color: #007BFF (HSL: 210, 100%, 50%) - a vibrant blue for a professional yet approachable feel.
+- Background color: #F8FAFC (HSL: 210, 27%, 97%) - a light, desaturated blue providing a clean and neutral backdrop.
+- Accent color: #32CD32 (HSL: 120, 61%, 50%) - a bright, contrasting green for highlighting key actions and elements.
+- Headings: 'Poppins' (sans-serif) for a modern and geometric style.
+- Body: 'Inter' (sans-serif) for a clean, readable, and neutral presentation.
+- Numbers: 'Roboto Mono' (monospace) for clear presentation of numeric values, like currency and dates.
+- Use rounded cards with soft shadows (`shadow-md`) to create a visually appealing and user-friendly interface.
