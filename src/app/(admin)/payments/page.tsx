@@ -1,26 +1,33 @@
 
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { PageHeader } from '@/components/PageHeader';
-import { mockPayments } from '@/lib/data';
 import { formatINR, formatIST } from '@/lib/format';
 import { Badge } from '@/components/ui/badge';
 import { FileDown, PlusCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import * as mockApi from '@/lib/mockApi';
+import type { Payment } from '@/lib/types';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function PaymentsPage() {
-    const [payments, setPayments] = React.useState(mockPayments);
-    const [search, setSearch] = React.useState('');
+    const [payments, setPayments] = useState<Payment[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState('');
 
-    const filteredPayments = payments.filter(payment =>
-        payment.rider.fullName.toLowerCase().includes(search.toLowerCase()) ||
-        payment.rentalId.toLowerCase().includes(search.toLowerCase())
-    );
+    useEffect(() => {
+        setLoading(true);
+        mockApi.listPayments({ q: search })
+            .then(data => {
+                setPayments(data.rows);
+                setLoading(false);
+            });
+    }, [search]);
 
     return (
         <>
@@ -49,7 +56,11 @@ export default function PaymentsPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {filteredPayments.map((payment) => (
+                            {loading ? (
+                                Array.from({ length: 10 }).map((_, i) => (
+                                    <TableRow key={i}><TableCell colSpan={6}><Skeleton className="h-8 w-full" /></TableCell></TableRow>
+                                ))
+                            ) : payments.length > 0 ? payments.map((payment) => (
                                 <TableRow key={payment.id}>
                                     <TableCell className="font-medium">
                                         <Link href={`/payments/${payment.id}`} className="hover:underline text-primary">
@@ -68,7 +79,9 @@ export default function PaymentsPage() {
                                     <TableCell>{formatIST(payment.transactionDate, 'dd MMM yyyy')}</TableCell>
                                     <TableCell className="text-right font-code">{formatINR(payment.amount)}</TableCell>
                                 </TableRow>
-                            ))}
+                            )) : (
+                                <TableRow><TableCell colSpan={6} className="text-center">No payments found.</TableCell></TableRow>
+                            )}
                         </TableBody>
                     </Table>
                 </CardContent>

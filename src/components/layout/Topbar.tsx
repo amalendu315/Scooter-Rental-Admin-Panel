@@ -34,6 +34,7 @@ export function Topbar() {
         { href: '/riders', label: 'Riders' },
         { href: '/vehicles', label: 'Vehicles' },
         { href: '/rentals', label: 'Rentals' },
+        { href: '/returns', label: 'Returns' },
     ];
 
     const MobileNavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {

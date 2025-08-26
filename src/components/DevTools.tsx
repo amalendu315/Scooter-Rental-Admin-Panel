@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -41,8 +42,8 @@ export function DevTools() {
         toast({ title: 'Success', description: 'DB snapshot downloaded.', variant: 'default' });
     }
 
-    // Only show in development
-    if (process.env.NODE_ENV !== 'development') {
+    // Only show if mock is enabled - in a real Vite app this would use import.meta.env.VITE_USE_MOCK
+    if (process.env.NODE_ENV === 'production') {
         return null;
     }
 

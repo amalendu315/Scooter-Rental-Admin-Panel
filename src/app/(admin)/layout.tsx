@@ -6,6 +6,7 @@ import { useAuthStore } from '@/store/auth';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { Topbar } from '@/components/layout/Topbar';
 import { Skeleton } from '@/components/ui/skeleton';
+import {Footer} from "@/components/layout/Footer";
 
 export default function AdminLayout({
                                         children,
@@ -60,6 +61,7 @@ export default function AdminLayout({
                 <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-muted/40">
                     {children}
                 </main>
+                <Footer />
             </div>
         </div>
     );

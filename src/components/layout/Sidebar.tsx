@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -12,30 +13,19 @@ import {
     Settings,
     Users,
     Users2,
+    RotateCcw,
+    Battery,
+    Replace
 } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
 import { cn } from '@/lib/utils';
 import type { ReactNode } from 'react';
+import Image from "next/image";
 
 const ZapGoLogo = () => (
     <div className="flex items-center gap-2 px-4">
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-8 w-8 text-primary"
-        >
-            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-            <path d="M5 3v4" />
-            <path d="M19 17v4" />
-            <path d="M3 5h4" />
-            <path d="M17 19h4" />
-        </svg>
-        <span className="text-xl font-bold font-headline">ZapGo Admin</span>
+        <Image src="/logo_zapgo_final.png" alt="ZapGo Logo" width={70} height={50} />
+        <span className="text-xl font-bold font-headline">Admin</span>
     </div>
 );
 
@@ -66,10 +56,16 @@ export function Sidebar() {
         { href: '/riders', label: 'Riders', icon: <Users2 className="h-4 w-4" /> },
         { href: '/vehicles', label: 'Vehicles', icon: <Bike className="h-4 w-4" /> },
         { href: '/rentals', label: 'Rentals', icon: <FileText className="h-4 w-4" /> },
+        { href: '/returns', label: 'Return Center', icon: <RotateCcw className="h-4 w-4" /> },
         { href: '/payments', label: 'Payments', icon: <CreditCard className="h-4 w-4" /> },
         { href: '/alerts', label: 'Alerts', icon: <AlertCircle className="h-4 w-4" /> },
         { href: '/reports', label: 'Reports', icon: <BarChart2 className="h-4 w-4" /> },
     ];
+
+    const batteryLinks = [
+        { href: '/batteries', label: 'Battery Packs', icon: <Battery className="h-4 w-4" />},
+        { href: '/battery-swaps', label: 'Battery Swaps', icon: <Replace className="h-4 w-4" />},
+    ]
 
     const adminLinks = [
         { href: '/staff', label: 'Staff', icon: <Users className="h-4 w-4" /> },
@@ -82,9 +78,13 @@ export function Sidebar() {
                 <div className="flex h-16 items-center border-b px-4 lg:h-[68px] lg:px-6">
                     <ZapGoLogo />
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 overflow-y-auto">
                     <nav className="grid items-start gap-1 px-2 text-sm font-medium lg:px-4">
                         {navLinks.map((link) => (
+                            <NavItem key={link.href} href={link.href} icon={link.icon}>{link.label}</NavItem>
+                        ))}
+                        <hr className="my-2"/>
+                        {batteryLinks.map((link) => (
                             <NavItem key={link.href} href={link.href} icon={link.icon}>{link.label}</NavItem>
                         ))}
                         {isAdmin && (

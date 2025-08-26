@@ -28,8 +28,7 @@ import {
 } from "@/components/ui/alert-dialog"
 
 export default function RiderDetailPage({ params }: { params: { id: string } }) {
-    const { id } = params;
-    const rider = mockRiders.find((r) => r.id === id); // This will be updated to use the API
+    const rider = mockRiders.find((r) => r.id === params.id); // This will be updated to use the API
     const router = useRouter();
 
     if (!rider) {
@@ -41,7 +40,7 @@ export default function RiderDetailPage({ params }: { params: { id: string } }) 
 
     const handleDelete = async () => {
         // In a real app, you'd show a toast on success/error
-        await mockApi.deleteRider(id);
+        await mockApi.deleteRider(params.id);
         router.push('/riders');
     }
 

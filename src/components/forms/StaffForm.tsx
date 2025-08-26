@@ -27,7 +27,6 @@ import { StaffSchema } from '@/lib/schemas';
 import type { Staff } from '@/lib/types';
 import * as mockApi from '@/lib/mockApi';
 
-// Use a unified schema and make password optional for edit mode.
 const formSchema = StaffSchema.extend({
     password: StaffSchema.shape.password.optional(),
 });
@@ -53,15 +52,16 @@ export function StaffForm({ staff }: StaffFormProps) {
                 role: 'STAFF',
                 password: '',
                 status: 'active',
+                permissions: []
             },
     });
 
     async function onSubmit(data: StaffFormValues) {
         try {
             if (isEditMode && staff) {
-                await mockApi.updateUser(staff.id, data);
+                await mockApi.updateUser(staff.id, data as Staff);
             } else {
-                await mockApi.createStaff(data as Omit<Staff, "id" | "lastLogin" | "createdAt" | "updatedAt">);
+                await mockApi.createStaff(data as any);
             }
             toast({
                 title: isEditMode ? 'Staff Updated' : 'Staff Member Created',

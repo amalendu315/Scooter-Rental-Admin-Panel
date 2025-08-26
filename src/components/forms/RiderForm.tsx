@@ -40,7 +40,7 @@ export function RiderForm({ rider, onSuccess }: RiderFormProps) {
     const isEditMode = !!rider;
 
     const defaultValues: Partial<RiderFormValues> = rider
-        ? { ...rider, documentExpiryDate: rider.documentExpiryDate ? rider.documentExpiryDate.split('T')[0] : '' }
+        ? { ...rider, documentExpiryDate: rider.documentExpiryDate ? new Date(rider.documentExpiryDate).toISOString().split('T')[0] : '' }
         : {
             fullName: '',
             phone: '',
@@ -60,7 +60,7 @@ export function RiderForm({ rider, onSuccess }: RiderFormProps) {
 
     async function onSubmit(data: RiderFormValues) {
         try {
-            if (isEditMode) {
+            if (isEditMode && rider) {
                 await mockApi.updateRider(rider.id, data);
             } else {
                 await mockApi.createRider(data as any);

@@ -16,17 +16,16 @@ import type { Vehicle } from '@/lib/types';
 import { useEffect, useState } from 'react';
 
 export default function VehicleDetailPage({ params }: { params: { id: string } }) {
-    const { id } = params;
     const [vehicle, setVehicle] = useState<Vehicle | null>(null);
     const router = useRouter();
     const { toast } = useToast();
 
     useEffect(() => {
-        mockApi.getVehicle(id).then(v => {
+        mockApi.getVehicle(params.id).then(v => {
             if (v) setVehicle(v)
             else notFound();
         })
-    }, [id]);
+    }, [params.id]);
 
 
     if (!vehicle) {
@@ -37,7 +36,7 @@ export default function VehicleDetailPage({ params }: { params: { id: string } }
 
     const handleAvailabilityToggle = async (checked: boolean) => {
         try {
-            await mockApi.updateVehicle(id, { available: checked });
+            await mockApi.updateVehicle(params.id, { available: checked });
             setVehicle(v => v ? {...v, available: checked} : null);
             toast({ title: 'Success', description: 'Vehicle availability updated.'});
         } catch(e: any) {

@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -17,6 +18,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { VehicleSchema } from '@/lib/schemas';
 import type { Vehicle } from '@/lib/types';
+import * as mockApi from '@/lib/mockApi';
 
 type VehicleFormValues = z.infer<typeof VehicleSchema>;
 
@@ -30,7 +32,7 @@ export function VehicleForm({ vehicle }: VehicleFormProps) {
     const isEditMode = !!vehicle;
 
     const defaultValues: Partial<VehicleFormValues> = vehicle
-        ? { ...vehicle, lastServiceDate: vehicle.lastServiceDate.split('T')[0] }
+        ? { ...vehicle, lastServiceDate: new Date(vehicle.lastServiceDate).toISOString().split('T')[0] }
         : {
             code: '',
             make: '',
@@ -46,17 +48,25 @@ export function VehicleForm({ vehicle }: VehicleFormProps) {
         defaultValues,
     });
 
-    function onSubmit(data: VehicleFormValues) {
-        console.log(data);
-        toast({
-            title: isEditMode ? 'Vehicle Updated' : 'Vehicle Created',
-            description: `Vehicle ${data.code} has been successfully ${isEditMode ? 'updated' : 'created'}.`,
-            variant: 'default',
-        });
-        if (isEditMode) {
-            router.refresh();
-        } else {
-            router.push('/vehicles');
+    async function onSubmit(data: VehicleFormValues) {
+        try {
+            if (isEditMode && vehicle) {
+                await mockApi.updateVehicle(vehicle.id, data);
+            } else {
+                await mockApi.createVehicle(data as any);
+            }
+            toast({
+                title: isEditMode ? 'Vehicle Updated' : 'Vehicle Created',
+                description: `Vehicle ${data.code} has been successfully ${isEditMode ? 'updated' : 'created'}.`,
+                variant: 'default',
+            });
+            if (isEditMode) {
+                router.refresh();
+            } else {
+                router.push('/vehicles');
+            }
+        } catch(e: any) {
+            toast({ title: 'Error', description: e.message, variant: 'destructive'});
         }
     }
 

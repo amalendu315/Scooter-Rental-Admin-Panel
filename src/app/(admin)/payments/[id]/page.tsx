@@ -12,8 +12,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
 export default function PaymentDetailPage({ params }: { params: { id: string } }) {
-    const { id } = params;
-    const payment = mockPayments.find((p) => p.id === id);
+    const payment = mockPayments.find((p) => p.id === params.id);
 
     if (!payment) {
         notFound();
@@ -21,7 +20,7 @@ export default function PaymentDetailPage({ params }: { params: { id: string } }
 
     return (
         <div className="space-y-6">
-            <PageHeader title={`Payment #${payment.id.substring(0, 7)}...`} description={`Details for payment made on ${formatIST(payment.transactionDate)}.`}>
+            <PageHeader title={`Payment #${params.id.substring(0, 7)}...`} description={`Details for payment made on ${formatIST(payment.transactionDate)}.`}>
                 <Button variant="outline" asChild>
                     <Link href="/payments"><ArrowLeft className="mr-2 h-4 w-4" /> Back to Payments</Link>
                 </Button>

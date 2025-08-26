@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -15,19 +16,24 @@ export default function LoginPage() {
     const login = useAuthStore((state) => state.login);
 
     const { register, handleSubmit, formState: { errors } } = useForm({
-        defaultValues: { email: 'admin@zapgo.com', password: 'password' },
+        defaultValues: { email: 'admin@zapgo.in', password: 'password' },
     });
 
     const onSubmit = (data: any) => {
-        if (data.email === 'admin@zapgo.com' && data.password === 'password') {
-            login({ id: 's1', name: 'Super Admin', email: 'admin@zapgo.com', role: 'ADMIN' }, 'fake-jwt-token-admin');
+        if (data.email === 'admin@zapgo.in' && data.password === 'Admin@123') {
+            login({ id: 's-admin', name: 'Admin User', email: 'admin@zapgo.in', role: 'ADMIN' }, 'fake-jwt-token-admin');
             toast({ title: 'Login Successful', description: 'Welcome back, Admin!', variant: 'default' });
             router.push('/dashboard');
-        } else if (data.email === 'staff@zapgo.com' && data.password === 'password') {
-            login({ id: 's2', name: 'Rajesh Kumar', email: 'staff@zapgo.com', role: 'STAFF' }, 'fake-jwt-token-staff');
-            toast({ title: 'Login Successful', description: 'Welcome back, Rajesh!', variant: 'default' });
+        } else if (data.email === 'ops@zapgo.in' && data.password === 'Ops@123') {
+            login({ id: 's-ops', name: 'Ops User', email: 'ops@zapgo.in', role: 'STAFF', permissions:[] }, 'fake-jwt-token-staff');
+            toast({ title: 'Login Successful', description: 'Welcome back, Ops User!', variant: 'default' });
             router.push('/dashboard');
-        } else {
+        } else if (data.email === 'limited@zapgo.in' && data.password === 'Limited@123') {
+            login({ id: 's-limited', name: 'Limited User', email: 'limited@zapgo.in', role: 'STAFF', permissions:[] }, 'fake-jwt-token-staff');
+            toast({ title: 'Login Successful', description: 'Welcome back, Limited User!', variant: 'default' });
+            router.push('/dashboard');
+        }
+        else {
             toast({
                 title: 'Login Failed',
                 description: 'Invalid email or password. Please try again.',
@@ -87,6 +93,11 @@ export default function LoginPage() {
                         <Button type="submit" className="w-full">
                             Login
                         </Button>
+                        <div className="text-center text-sm text-muted-foreground space-y-2 pt-4">
+                            <p><strong>Admin:</strong> admin@zapgo.in / Admin@123</p>
+                            <p><strong>Ops:</strong> ops@zapgo.in / Ops@123</p>
+                            <p><strong>Limited:</strong> limited@zapgo.in / Limited@123</p>
+                        </div>
                     </form>
                 </CardContent>
             </Card>
